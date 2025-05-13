@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: white;
+    }
+    .books {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .cart-box {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      width: 250px;
+      background: #f1f1f1;
+      padding: 10px;
+      border: 1px solid #999;
+      display: none;
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 22px;
+      justify-content: space-between;
+      background-color: black;
+      color: white;
+    }
+    
+    .burger span {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    
+    .mobile-menu{
+      display: none;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      z-index: 1000;
+      gap: 20px;
+      text-decoration: none;
+    }
+
+    .mobile-menu a {
+      text-decoration: none;
+      color: black;
+    }
+
+    
+    @media (max-width: 768px) {
+      .burger {
+        display: flex;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .books {
+        grid-template-columns:repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h2>BookNest</h2>
+  <button class="burger" onclick="toggleMenu()">☰</button>
+<div class="nav">
+  <a href="#">Home</a>
+  <a href="#">Browse</a>
+  <a href="#">Cart</a>
+</div>
+</header>
+<nav class="mobile-menu" id="mobileMenu">
+    <a href="#">Home</a>
+    <a href="#">New</a>
+    <a href="#">Popular</a>
+    <a href="#">Trending</a>
+    <a href="#">Categories</a>
+  </nav>
+
+
+<div class="books">
+ <div class="card">
+  <img src="assets/sample-books/book-1984.jpg" alt="1984" onclick="showBookInfo('1984', 'assets/sample-books/book-1984.jpg', '$1.50 / day')">
+  <h3>1984</h3>
+  <p>$1.50 / day</p>
+  <button onclick="addToCart('1984', 1.5)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-hobbit.jpg" alt="Hobbit" onclick="showBookInfo('The Hobbit', 'assets/sample-books/book-hobbit.jpg', '$2.00 / day')">
+  <h3>The Hobbit</h3>
+  <p>$2.00 / day</p>
+  <button onclick="addToCart('The Hobbit', 2.0)">Rent</button>
+</div>
+<div class="card">
+  <img src="/assets/sample-books/book-mockingbird.jpg" alt="Hobbit" onclick="showBookInfo('To Kill a Mockingbird', '/assets/sample-books/book-mockingbird.jpg', '$2.50 / day')">
+  <h3>To Kill a Mockingbird</h3>
+  <p>$2.50 / day</p>
+  <button onclick="addToCart('To Kill a Mockingbird', 2.5)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-pride.jpg" alt="Hobbit" onclick="showBookInfo('Pride and Predj', 'assets/sample-books/book-pride.jpg', '$3.00 / day')">
+  <h3>Pride and Predj</h3>
+  <p>$3.00 / day</p>
+  <button onclick="addToCart('Pride and Predj', 3.0)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-mobydick.jpg" alt="Hobbit" onclick="showBookInfo('Moby-Dick', 'assets/sample-books/book-mobydick.jpg', '$1.00 / day')">
+  <h3>Moby-Dick</h3>
+  <p>$1.00 / day</p>
+  <button onclick="addToCart('Moby-Dick', 1.0)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-warpeace.jpg" alt="Hobbit" onclick="showBookInfo('War and Peace', 'assets/sample-books/book-warpeace.jpg', '$1.50 / day')">
+  <h3>War and Peace</h3>
+  <p>$1.50 / day</p>
+  <button onclick="addToCart('War and Peace', 1.5)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-gatsby.jpg" alt="Hobbit" onclick="showBookInfo('The Great Gatsby', 'assets/sample-books/book-gatsby.jpg', '$2.00 / day')">
+  <h3>The Great Gatsby</h3>
+  <p>$2.00 / day</p>
+  <button onclick="addToCart('The Great Gatsby', 2.0)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-catcher.jpg" alt="Hobbit" onclick="showBookInfo('The Catcher in the Rye', 'assets/sample-books/book-catcher.jpg', '$2.50 / day')">
+  <h3>The Catcher in the Rye</h3>
+  <p>$2.50 / day</p>
+  <button onclick="addToCart('The Catcher in the Rye', 2.5)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-bravenew.jpg" alt="Hobbit" onclick="showBookInfo('Brave New World', 'assets/sample-books/book-bravenew.jpg', '$1.50 / day')">
+  <h3>Brave New World</h3>
+  <p>$1.50 / day</p>
+  <button onclick="addToCart('Brave New World', 1.5)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-janeeyre.jpg" alt="Hobbit" onclick="showBookInfo('Jane Eyre', 'assets/sample-books/book-janeeyre.jpg', '$2.00 / day')">
+  <h3>Jane Eyre</h3>
+  <p>$2.00 / day</p>
+  <button onclick="addToCart('Jane Eyre', 2.0)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-crime.jpg" alt="Hobbit" onclick="showBookInfo('Crime And Punishment', 'assets/sample-books/book-crime.jpg', '$2.50 / day')">
+  <h3>Crime And Punishment</h3>
+  <p>$2.50 / day</p>
+  <button onclick="addToCart('Crime And Punishment', 2.5)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-anna.jpg" alt="Hobbit" onclick="showBookInfo('Anna Karenina', 'assets/sample-books/book-anna.jpg', '$2.00 / day')">
+  <h3>Anna Karenina</h3>
+  <p>$2.00 / day</p>
+  <button onclick="addToCart('Anna Karenina', 2.0)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-alchemist.jpg" alt="Hobbit" onclick="showBookInfo('The Alchemist', 'assets/sample-books/book-alchemist.jpg', '$2.50 / day')">
+  <h3>The Alchemist</h3>
+  <p>$2.50 / day</p>
+  <button onclick="addToCart('The Alchemist', 2.5)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-lesmis.jpg" alt="Hobbit" onclick="showBookInfo('Les Miserables', 'assets/sample-books/book-lesmis.jpg', '$2.00 / day')">
+  <h3>Les Miserables</h3>
+  <p>$2.00 / day</p>
+  <button onclick="addToCart('Les Miserables', 2.0)">Rent</button>
+</div>
+<div class="card">
+  <img src="assets/sample-books/book-donquixote.jpg" alt="Hobbit" onclick="showBookInfo('Don Quixote', 'assets/sample-books/book-donquixote.jpg', '$2.50 / day')">
+  <h3>Don Quixote</h3>
+  <p>$2.50 / day</p>
+  <button onclick="addToCart('Don Quixote', 2.5)">Rent</button>
+</div>
+<div id="bookInfo" style="padding: 20px; background: #f9f9f9; border-top: 1px solid #ccc;"></div>
+<div class="cart-box" id="cart">
+  <h3>Your Cart</h3>
+  <div id="cartItems">No books yet</div>
+  <p id="totalPrice">Total: $0</p>
+</div>
+
+<script>
+  let cart = [];
+  let total = 0;
+
+  function addToCart(title, price) {
+    cart.push({ title, price });
+    total += price;
+
+    let itemsHTML = "";
+    cart.forEach(item => {
+      itemsHTML += `<p>${item.title} - $${item.price}</p>`;
+    });
+
+    document.getElementById("cartItems").innerHTML = itemsHTML;
+    document.getElementById("totalPrice").innerHTML = "Total: $" + total;
+    document.getElementById("cart").style.display = "block";
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("active");
+  }
+
+  function showBookInfo(title, imageUrl, price) {
+  document.getElementById("bookInfo").innerHTML = `
+    <h2>${title}</h2>
+    <img src="${imageUrl}" alt="${title}" style="width: 200px; height: auto;">
+    <p><strong>Price:</strong> ${price}</p>
+    <p>This is a description of <em>${title}</em>. You can buy this book here.</p>
+  `;
+}
+
+</script>
+
+</body>
+</html>
