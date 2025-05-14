@@ -228,30 +228,49 @@
   <h3>Your Cart</h3>
   <div id="cartItems">No books yet</div>
   <p id="totalPrice">Total: $0</p>
+  <button id="confirmBt">Confirm Rental</button>
 </div>
 
 <script>
-  let cart = [];
-  let total = 0;
+ let cart = [];
+let total = 0;
 
-  function addToCart(title, price) {
-    cart.push({ title, price });
-    total += price;
-
-    let itemsHTML = "";
-    cart.forEach(item => {
-      itemsHTML += `<p>${item.title} - $${item.price}</p>`;
-    });
-
-    document.getElementById("cartItems").innerHTML = itemsHTML;
-    document.getElementById("totalPrice").innerHTML = "Total: $" + total;
-    document.getElementById("cart").style.display = "block";
+function addToCart(title, price) {
+  let found = false;
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].title === title) {
+      cart[i].quantity += 1;
+      found = true;
+      break;
+    }
   }
+  if (!found) {
+    cart.push({ title: title, price: price, quantity: 1 });
+  }
+
+  total += price;
+
+  let itemsHTML = "";
+  for (let i = 0; i < cart.length; i++) {
+    itemsHTML += `<p>${cart[i].title} - $${cart[i].price} x${cart[i].quantity}</p>`;
+  }
+
+  document.getElementById("cartItems").innerHTML = itemsHTML;
+  document.getElementById("totalPrice").innerHTML = "Total: $" + total;
+  document.getElementById("cart").style.display = "block";
+}
 
   function toggleMenu() {
     const menu = document.getElementById("mobileMenu");
     menu.classList.toggle("active");
   }
+
+  document.getElementById('confirmBt').addEventListener('click', function(){
+    cart = [];
+    total = 0;
+    document.getElementById('cartItems').innerHTML = 'No books';
+    document.getElementById('totalPrice').innerHTML = 'Total: $0';
+  })
 
   function showBookInfo(title, imageUrl, price) {
   document.getElementById("bookInfo").innerHTML = `
